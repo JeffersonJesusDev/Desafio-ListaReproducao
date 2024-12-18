@@ -15,7 +15,6 @@ public class ReproducaoService {
     private ReproducaoRepository reproducaoRepository;
 
 
-
     public List<Reproducao> pegarReproducoes(){
         return reproducaoRepository.findAll();
     }
@@ -23,6 +22,19 @@ public class ReproducaoService {
     public Optional<Reproducao> pegarReproducaoPeloNome(String nome){
         return reproducaoRepository.findByNome(nome);
 
+    }
+
+    public void deletarReproducao(Reproducao reproducao){
+        reproducaoRepository.delete(reproducao);
+    }
+
+    public void deletarReproducaoPeloNome(String nome){
+        Reproducao reproducao = pegarReproducaoPeloNome(nome).get();
+        reproducaoRepository.delete(reproducao);
+    }
+
+    public Reproducao salvarReproducao(Reproducao reproducao){
+        return reproducaoRepository.save(reproducao);
     }
 
 }
