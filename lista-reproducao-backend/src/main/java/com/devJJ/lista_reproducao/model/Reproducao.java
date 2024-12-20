@@ -1,5 +1,6 @@
 package com.devJJ.lista_reproducao.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,8 +16,9 @@ public class Reproducao {
     private String nome;
     private String descricao;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Musica> musica;
+    @OneToMany(mappedBy = "reproducao", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Musica> musicas;
 
 
     public Reproducao(Long id, String nome, String descricao) {

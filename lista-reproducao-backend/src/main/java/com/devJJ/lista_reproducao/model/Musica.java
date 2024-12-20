@@ -1,5 +1,6 @@
 package com.devJJ.lista_reproducao.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,10 @@ public class Musica {
     private String ano;
     private String Genero;
 
+    @ManyToOne
+    @JoinColumn(name = "reproducao_id")
+    @JsonBackReference
+    private Reproducao reproducao;
 
     public Musica() {
     }
