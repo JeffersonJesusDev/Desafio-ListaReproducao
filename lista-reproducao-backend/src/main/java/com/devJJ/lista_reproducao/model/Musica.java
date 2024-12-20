@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_muisicas")
+@Table(name = "tb_musicas")
 public class Musica {
 
     @Id
@@ -12,28 +12,30 @@ public class Musica {
     private Long id;
     private String titulo;
     private String artista;
-    private String Album;
+    private String album;
     private String ano;
-    private String Genero;
+    private String genero;
 
     @ManyToOne
     @JoinColumn(name = "reproducao_id")
     @JsonBackReference
     private Reproducao reproducao;
 
+
     public Musica() {
     }
+
 
     public Musica(Long id, String titulo, String artista, String album, String ano, String genero) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
-        Album = album;
+        this.album = album;
         this.ano = ano;
-        Genero = genero;
+        this.genero = genero;
     }
 
-
+    // Getters e setters
     public Long getId() {
         return id;
     }
@@ -59,11 +61,11 @@ public class Musica {
     }
 
     public String getAlbum() {
-        return Album;
+        return album;
     }
 
     public void setAlbum(String album) {
-        Album = album;
+        this.album = album;
     }
 
     public String getAno() {
@@ -75,10 +77,18 @@ public class Musica {
     }
 
     public String getGenero() {
-        return Genero;
+        return genero;
     }
 
     public void setGenero(String genero) {
-        Genero = genero;
+        this.genero = genero;
+    }
+
+    public Reproducao getReproducao() {
+        return reproducao;
+    }
+
+    public void setReproducao(Reproducao reproducao) {
+        this.reproducao = reproducao;
     }
 }

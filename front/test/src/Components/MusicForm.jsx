@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/app.css";
 
-const API_URL = "/api"; 
+const API_URL = "/api";
 
 const MusicForm = () => {
   const [musicas, setMusicas] = useState([]);
@@ -15,8 +15,8 @@ const MusicForm = () => {
   });
   const [novaPlaylist, setNovaPlaylist] = useState({
     nome: "",
-    descrição: "",
-    músicas: [],
+    descricao: "",
+    musicas: [],
   });
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -31,7 +31,7 @@ const MusicForm = () => {
 
   const fetchMusicas = async () => {
     try {
-      const response = await fetch(`${API_URL}/lists`, {
+      const response = await fetch(`${API_URL}/musicas`, {
         ...fetchOptions,
         method: "GET",
       });
@@ -58,7 +58,7 @@ const MusicForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/lists`, {
+      const response = await fetch(`${API_URL}/musicas`, {
         ...fetchOptions,
         method: "POST",
         body: JSON.stringify(novaMusica),
@@ -90,8 +90,8 @@ const MusicForm = () => {
         fetchPlaylists();
         setNovaPlaylist({
           nome: "",
-          descrição: "",
-          músicas: [],
+          descricao: "",
+          musicas: [],
         });
       }
     } catch (error) {
@@ -105,17 +105,17 @@ const MusicForm = () => {
     setShowModal(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     confirmDelete(id, "music");
   };
 
-  const handleDeletePlaylist = async (id) => {
+  const handleDeletePlaylist = (id) => {
     confirmDelete(id, "playlist");
   };
 
   const handleConfirmDelete = async () => {
     try {
-      const endpoint = deleteType === "music" ? "lists" : "lists";
+      const endpoint = deleteType === "music" ? "musicas" : "playlists";
       await fetch(`${API_URL}/${endpoint}/${itemToDelete}`, {
         ...fetchOptions,
         method: "DELETE",
@@ -135,7 +135,6 @@ const MusicForm = () => {
     fetchMusicas();
     fetchPlaylists();
   }, []);
-
 
   return (
     <div className="container">
@@ -190,7 +189,7 @@ const MusicForm = () => {
             }
           />
           <input
-            type="number"
+            type="text"
             placeholder="Ano"
             value={novaMusica.ano}
             onChange={(e) =>
