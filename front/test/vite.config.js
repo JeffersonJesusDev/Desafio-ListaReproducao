@@ -5,10 +5,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/lists': {
+      '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/lists/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

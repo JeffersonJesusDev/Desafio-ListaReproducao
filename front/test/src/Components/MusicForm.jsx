@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/app.css";
 
-const API_URL = "http://localhost:8080";
+const API_URL = "/api"; 
 
 const MusicForm = () => {
   const [musicas, setMusicas] = useState([]);
@@ -24,14 +24,17 @@ const MusicForm = () => {
 
   const fetchOptions = {
     headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
   };
 
   const fetchMusicas = async () => {
     try {
-      const response = await fetch(`${API_URL}/lists`, fetchOptions);
+      const response = await fetch(`${API_URL}/lists`, {
+        ...fetchOptions,
+        method: "GET",
+      });
       const data = await response.json();
       setMusicas(data);
     } catch (error) {
@@ -41,7 +44,10 @@ const MusicForm = () => {
 
   const fetchPlaylists = async () => {
     try {
-      const response = await fetch(`${API_URL}/lists`, fetchOptions);
+      const response = await fetch(`${API_URL}/lists`, {
+        ...fetchOptions,
+        method: "GET",
+      });
       const data = await response.json();
       setPlaylists(data);
     } catch (error) {
@@ -109,17 +115,14 @@ const MusicForm = () => {
 
   const handleConfirmDelete = async () => {
     try {
+      const endpoint = deleteType === "music" ? "lists" : "lists";
+      await fetch(`${API_URL}/${endpoint}/${itemToDelete}`, {
+        ...fetchOptions,
+        method: "DELETE",
+      });
       if (deleteType === "music") {
-        await fetch(`${API_URL}/lists/${itemToDelete}`, {
-          ...fetchOptions,
-          method: "DELETE",
-        });
         fetchMusicas();
       } else {
-        await fetch(`${API_URL}/lists/${itemToDelete}`, {
-          ...fetchOptions,
-          method: "DELETE",
-        });
         fetchPlaylists();
       }
       setShowModal(false);
@@ -132,6 +135,7 @@ const MusicForm = () => {
     fetchMusicas();
     fetchPlaylists();
   }, []);
+
 
   return (
     <div className="container">
